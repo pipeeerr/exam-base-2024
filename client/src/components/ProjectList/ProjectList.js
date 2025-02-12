@@ -9,20 +9,20 @@ import Paginator from '../Paginator/Paginator'
 const ProjectList = () => {
   const globalState = useContext(AppContext)
   const navigate = useNavigate()
-  const [ projects, setProjects ] = useState([])
-  const [ pageNumber, setPageNumber ] = useState(1)
-  const [ pageSize, setPageSize ] = useState('')
-  const [ filterField, setFilterField ] = useState('')
-  const [ filterValue, setFilterValue ] = useState('')
-  const [ sortField, setSortField ] = useState('')
-  const [ sortOrder, setSortOrder ] = useState('')
+  const [projects, setProjects] = useState([])
+  const [pageNumber, setPageNumber] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
+  const [filterField, setFilterField] = useState('')
+  const [filterValue, setFilterValue] = useState('')
+  const [sortField, setSortField] = useState('')
+  const [sortOrder, setSortOrder] = useState('')
 
   useEffect(() => {
     globalState.project.getAll(globalState, pageNumber, pageSize, filterField, filterValue, sortField, sortOrder)
     globalState.project.emitter.addListener('GET_PROJECTS_SUCCESS', () => {
       setProjects(globalState.project.data)
     })
-  }, [ pageNumber, pageSize, filterField, filterValue, sortField, sortOrder ])
+  }, [pageNumber, pageSize, filterField, filterValue, sortField, sortOrder])
 
   return (
     <div className='project-list'>
@@ -34,35 +34,47 @@ const ProjectList = () => {
               <div>
                 Name
               </div>
-              <input type='text' onChange={e => {
-                setFilterValue(e.target.value)
-                setFilterField('name')
-              }} placeholder='name filter' />
+              <input
+                type='text' onChange={e => {
+                  setFilterValue(e.target.value)
+                  setFilterField('name')
+                }} placeholder='name filter'
+              />
               <button onClick={() => {
                 setSortField('name')
                 setSortOrder('asc')
-              }}>⌃</button>
+              }}
+              >⌃
+              </button>
               <button onClick={() => {
                 setSortField('name')
                 setSortOrder('desc')
-              }}>⌄</button>
+              }}
+              >⌄
+              </button>
             </th>
             <th>
               <div>
                 Description
               </div>
-              <input type='text' onChange={e => {
-                setFilterValue(e.target.value)
-                setFilterField('description')
-              }} placeholder='description filter' />
+              <input
+                type='text' onChange={e => {
+                  setFilterValue(e.target.value)
+                  setFilterField('description')
+                }} placeholder='description filter'
+              />
               <button onClick={() => {
                 setSortField('description')
                 setSortOrder('asc')
-              }}>⌃</button>
+              }}
+              >⌃
+              </button>
               <button onClick={() => {
                 setSortField('description')
                 setSortOrder('desc')
-              }}>⌄</button>
+              }}
+              >⌄
+              </button>
             </th>
           </tr>
         </thead>
@@ -72,9 +84,10 @@ const ProjectList = () => {
           }
         </tbody>
       </table>
-      <Paginator 
-        onPageChange={(pageNumber) => setPageNumber(pageNumber)} 
-        onPageSizeChange={(pageSize) => setPageSize(pageSize)} 
+      <Paginator
+        onPageChange={(pageNumber) => setPageNumber(pageNumber)}
+        onPageSizeChange={(pageSize) => setPageSize(pageSize)}
+        totalRecords={globalState.project.count}
       />
       <div className='footer'>
         <button onClick={() => navigate('/projects/new')}>

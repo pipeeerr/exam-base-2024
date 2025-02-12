@@ -3,13 +3,17 @@ import models from '../../models/index.mjs'
 const getAllTasksForProject = async (req, res, next) => {
   try {
     const query = {
-      projectId: req.params.pid
+    	where: {
+     		projectId: req.params.pid
+     	}
     }
     const filterQuery = {
-      projectId: req.params.pid
+    	where: {
+      	projectId: req.params.pid
+     	}
     }
     const count = await models.Task.count({
-      ...filterQuery, 
+      ...filterQuery,
       include: {
         model: models.Permission,
         where: {
@@ -17,7 +21,7 @@ const getAllTasksForProject = async (req, res, next) => {
           type: 'task'
         },
         required: false
-      } 
+      }
     })
     const data = await models.Task.findAll({
       ...query,
@@ -47,7 +51,7 @@ const getOneTaskForProject = async (req, res, next) => {
       where: {
         id: req.params.tid,
         projectId: req.params.pid
-      },  
+      },
       include: [{
         model: models.Permission,
         where: {
@@ -82,7 +86,7 @@ const createOwnedTaskForProject = async (req, res, next) => {
       forResource: task.id,
       forUser: req.params.uid,
       type: 'task',
-      perms: ['read', 'write']
+      rights: ['read', 'write']
     })
     res.status(201).json(task)
   } catch (err) {
@@ -140,7 +144,7 @@ const assignTaskToUser = async (req, res, next) => {
     if (!task) {
       return res.status(404).json({ message: 'Task not found' })
     }
-    
+
     const user = await models.User.findOne({
       where: {
         id: req.body.assignedTo

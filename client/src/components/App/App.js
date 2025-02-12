@@ -19,11 +19,11 @@ import UserSuggestionStore from '../../state/stores/UserSuggestionStore'
 import ErrorDisplay from '../ErrorDisplay'
 
 const App = () => {
-  const [ isAuthenticated, setIsAuthenticated ] = useState(false)
-  const [ userStore, ] = useState(new UserStore())
-  const [ projectStore, ] = useState(new ProjectStore())
-  const [ taskStore, ] = useState(new TaskStore())
-  const [ userSuggestionStore, ] = useState(new UserSuggestionStore())
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userStore] = useState(new UserStore())
+  const [projectStore] = useState(new ProjectStore())
+  const [taskStore] = useState(new TaskStore())
+  const [userSuggestionStore] = useState(new UserSuggestionStore())
 
   useEffect(() => {
     userStore.emitter.addListener('LOGIN_SUCCESS', () => {
@@ -37,7 +37,8 @@ const App = () => {
       project: projectStore,
       task: taskStore,
       userSuggestion: userSuggestionStore
-    }}>
+    }}
+    >
       {
         isAuthenticated && (
           <div className='app-header'>
@@ -45,12 +46,12 @@ const App = () => {
               <h5>Welcome, {userStore.data.email}</h5>
             </div>
             <div>
-              <button onClick={() => 
-                  {
-                    userStore.logout()
-                    setIsAuthenticated(false)  
-                  }
-                }>Logout</button>
+              <button onClick={() => {
+                userStore.logout()
+                setIsAuthenticated(false)
+              }}
+              >Logout
+              </button>
             </div>
           </div>
         )
@@ -58,42 +59,56 @@ const App = () => {
       <ErrorDisplay />
       <Router>
         <Routes>
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/" element={
-            <AuthGuard isAuthenticated={isAuthenticated}>
-              <Dashboard />
-            </AuthGuard>
-          } /> 
-          <Route path="/dashboard/:type" element={
-            <AuthGuard isAuthenticated={isAuthenticated}>
-              <Dashboard />
-            </AuthGuard>
-          } /> 
-          <Route path="/projects" element={
-            <AuthGuard isAuthenticated={isAuthenticated}>
-              <ProjectList />
-            </AuthGuard>
-          } />
-          <Route path="/projects/new" element={
-            <AuthGuard isAuthenticated={isAuthenticated}>
-              <ProjectForm />
-            </AuthGuard>
-          } />
-          <Route path="/projects/:pid/tasks" element={
-            <AuthGuard isAuthenticated={isAuthenticated}>
-              <TaskList />
-            </AuthGuard>
-          } />
-          <Route path="/projects/:pid/tasks/new" element={
-            <AuthGuard isAuthenticated={isAuthenticated}>
-              <TaskForm />
-            </AuthGuard>
-          } />
-          <Route path="/projects/:pid/tasks/:tid" element={
-            <AuthGuard isAuthenticated={isAuthenticated}>
-              <TaskDetails />
-            </AuthGuard>
-          } />
+          <Route path='/login' element={<LoginForm />} />
+          <Route
+            path='/' element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <Dashboard />
+              </AuthGuard>
+          }
+          />
+          <Route
+            path='/dashboard/:type' element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <Dashboard />
+              </AuthGuard>
+          }
+          />
+          <Route
+            path='/projects' element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <ProjectList />
+              </AuthGuard>
+          }
+          />
+          <Route
+            path='/projects/new' element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <ProjectForm />
+              </AuthGuard>
+          }
+          />
+          <Route
+            path='/projects/:pid/tasks' element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <TaskList />
+              </AuthGuard>
+          }
+          />
+          <Route
+            path='/projects/:pid/tasks/new' element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <TaskForm />
+              </AuthGuard>
+          }
+          />
+          <Route
+            path='/projects/:pid/tasks/:tid' element={
+              <AuthGuard isAuthenticated={isAuthenticated}>
+                <TaskDetails />
+              </AuthGuard>
+          }
+          />
         </Routes>
       </Router>
     </AppContext.Provider>
@@ -101,4 +116,3 @@ const App = () => {
 }
 
 export default App
-

@@ -7,12 +7,12 @@ import Paginator from '../Paginator/Paginator'
 
 const TaskList = () => {
   const globalState = useContext(AppContext)
-  const [ tasks, setTasks ] = useState([])
+  const [tasks, setTasks] = useState([])
   const navigate = useNavigate()
   const params = useParams()
 
   useEffect(() => {
-    globalState.task.getAll(globalState, params.pid, )
+    globalState.task.getAll(globalState, params.pid)
     globalState.task.emitter.addListener('GET_TASKS_SUCCESS', () => {
       setTasks(globalState.task.data)
     })

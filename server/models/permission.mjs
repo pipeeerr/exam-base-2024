@@ -20,7 +20,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    type: 'project',
+    type: {
+      type: DataTypes.ENUM('task', 'project'),
+      allowNull: false
+    },
     rights: {
       type: DataTypes.JSON,
       allowNull: false,

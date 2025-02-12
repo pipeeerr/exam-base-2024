@@ -2,7 +2,7 @@
   --primary-color: black;
   --secondary-color: white;
   --primary-bg-color: lightblue;
-  --secondary-bg-color: navy;
+  --secondary-bg-color: deepskyblue;
   --tertiary-bg-color: cornflowerblue;
   --error-color: tomato;
 }
@@ -10,9 +10,25 @@
 body {
   margin: 0;
   background-color: var(--primary-bg-color);
-  
+
   button {
     background-color: var(--secondary-bg-color);
+    color: var(--secondary-color);
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    border: 0px;
+  }
+
+  tr:nth-child(odd) button {
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-color);
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    border: 0px;
+  }
+
+  tr:nth-child(even) button {
+    background-color: var(--tertiary-bg-color);
     color: var(--secondary-color);
     border-radius: 0.5em;
     padding: 0.5em 1em;

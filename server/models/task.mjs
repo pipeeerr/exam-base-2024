@@ -11,18 +11,19 @@
  */
 export default (sequelize, DataTypes) => {
   return sequelize.define('task', {
-    title: { type: 
-      DataTypes.STRING, 
-      allowNull: false 
-    },
-    description: { 
-      type: DataTypes.TEXT ,
+    title: {
+      type:
+      DataTypes.STRING,
       allowNull: false
     },
-    status: { 
-      type: DataTypes.STRING, 
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'open' 
+      defaultValue: 'open'
     }
   })
 }

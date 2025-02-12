@@ -3,8 +3,8 @@ import AppContext from '../../state/AppContext'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const TaskForm = () => {
-  const [ title, setTitle ] = useState('')
-  const [ description, setDescription ] = useState('')
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
   const globalState = useContext(AppContext)
   const navigate = useNavigate()
   const params = useParams()
@@ -16,7 +16,6 @@ const TaskForm = () => {
     })
   }, [])
 
-
   return (
     <div>
       <h1>Task Form</h1>
@@ -24,18 +23,18 @@ const TaskForm = () => {
         type='text'
         placeholder='title'
         value={title}
-        onChange={e => setTitle(e.target.value)} 
+        onChange={e => setTitle(e.target.value)}
       />
       <input
         type='text'
         placeholder='description'
         value={description}
-        onChange={e => setDescription(e.target.value)} 
+        onChange={e => setDescription(e.target.value)}
       />
-      <button onClick={() => 
-        {
-          globalState.task.createOne(globalState, params.pid, { title, description })
-        }}>
+      <button onClick={() => {
+        globalState.task.createOne(globalState, params.pid, { title, description })
+      }}
+      >
         Create
       </button>
     </div>

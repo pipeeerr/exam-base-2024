@@ -4,27 +4,28 @@ import { Op } from 'sequelize'
 const getAllProjects = async (req, res, next) => {
   try {
     const query = {}
-		const filterQuery = {}
-		if (req.query.filterField && req.query.filterValue) {
-			query.where = {
-				[req.query.filterField]: {
-					[Op.like]: `%${req.query.filterValue}%`
-				}
-			}
-			filterQuery.where = {
-				[req.query.filterField]: {
-					[Op.like]: `%${req.query.filterValue}%`
-				}
-			}
-		}
-		if (req.query.pageSize && req.query.pageNumber) {
-			query.limit = req.query.pageSize
-			query.offset = parseInt(req.query.pageSize) * parseInt(req.query.pageNumber)
-		}
-		if (req.query.sortField && req.query.sortOrder) {
-			query.order = [[req.query.sortField, req.query.sortOrder]]
-		}
-    const count = await models.Project.count({ ...filterQuery,
+    const filterQuery = {}
+    if (req.query.filterField && req.query.filterValue) {
+      query.where = {
+        [req.query.filterField]: {
+          [Op.like]: `%${req.query.filterValue}%`
+        }
+      }
+      filterQuery.where = {
+        [req.query.filterField]: {
+          [Op.like]: `%${req.query.filterValue}%`
+        }
+      }
+    }
+    if (req.query.pageSize && req.query.pageNumber) {
+      query.limit = req.query.pageSize
+      query.offset = parseInt(req.query.pageSize) * parseInt(req.query.pageNumber)
+    }
+    if (req.query.sortField && req.query.sortOrder) {
+      query.order = [[req.query.sortField, req.query.sortOrder]]
+    }
+    const count = await models.Project.count({
+      ...filterQuery,
       include: {
         model: models.Permission,
         where: {
@@ -32,9 +33,9 @@ const getAllProjects = async (req, res, next) => {
           type: 'project'
         },
         required: false
-      } 
+      }
     })
-		const data = await models.Project.findAll({ 
+    const data = await models.Project.findAll({
       ...query,
       include: {
         model: models.Permission,
@@ -43,9 +44,9 @@ const getAllProjects = async (req, res, next) => {
           type: 'project'
         },
         required: false
-      },
+      }
     })
-		res.status(200).json({ data, count })
+    res.status(200).json({ data, count })
   } catch (err) {
     next(err)
   }
@@ -113,5 +114,5 @@ export default {
   getOneOwnedProject,
   createOwnedProject,
   updateOwnedProject,
-  deleteOwnedProject  
+  deleteOwnedProject
 }

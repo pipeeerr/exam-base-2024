@@ -8,9 +8,9 @@ class ProjectStore {
     this.emitter = new EventEmitter()
   }
 
-  async getAll (state, pageNumber = '', pageSize = '', filterField = '', filterValue = '', sortField = '', sortOrder = '') {  
+  async getAll (state, pageNumber = '', pageSize = '', filterField = '', filterValue = '', sortField = '', sortOrder = '') {
     try {
-      const response = await fetch(`${SERVER}/api/users/${state.user.data.id}/projects?pageSize=${pageSize || ''}&pageNumber=${pageNumber || ''}&filterField=${filterField || ''}&filterValue=${filterValue || ''}&sortField=${sortField || ''}&sortOrder=${sortOrder || ''}`, {
+      const response = await fetch(`${SERVER}/api/users/${state.user.data.id}/projects?pageSize=${pageSize || ''}&pageNumber=${pageNumber  === '' ? 0 : pageNumber}&filterField=${filterField || ''}&filterValue=${filterValue || ''}&sortField=${sortField || ''}&sortOrder=${sortOrder || ''}`, {
         headers: {
           authorization: state.user.data.token
         }

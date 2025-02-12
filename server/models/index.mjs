@@ -7,6 +7,7 @@ import createPermissionEntity from './permission.mjs'
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './db.sqlite',
+  logQueryParameters: true
 })
 
 const Project = createProjectEntity(sequelize, Sequelize)
@@ -20,8 +21,14 @@ Project.belongsTo(User)
 Project.hasMany(Task)
 Task.belongsTo(Project)
 
-Project.hasOne(Permission, { foreignKey: 'forResource' })
-Task.hasOne(Permission, { foreignKey: 'forResource' })  
+Project.hasOne(Permission, {
+  foreignKey: 'forResource',
+  constraints: false
+})
+Task.hasOne(Permission, {
+  foreignKey: 'forResource',
+  constraints: false
+})
 
 Task.belongsTo(User, { as: 'assignedTo' })
 User.hasOne(Task)
@@ -36,8 +43,8 @@ try {
 
 export default {
   sequelize,
-  Permission, 
+  Permission,
   Project,
   Task,
-  User,
+  User
 }

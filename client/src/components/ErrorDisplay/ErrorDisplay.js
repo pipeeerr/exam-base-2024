@@ -1,11 +1,10 @@
 import './ErrorDisplay.css'
-import React, { useEffect, useState } from 'react'
-import { useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import AppContext from '../../state/AppContext'
 
 const ErrorDisplay = () => {
   const globalState = useContext(AppContext)
-  const [ message, setMessage ] = useState('')
+  const [message, setMessage] = useState('')
   const [isVisibile, setIsVisible] = useState(false)
 
   useEffect(() => {

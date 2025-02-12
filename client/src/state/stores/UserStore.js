@@ -2,7 +2,7 @@ import EventEmitter from '../../utils/EventEmitter'
 import { SERVER } from '../../config/global'
 
 class UserStore {
-   constructor () {
+  constructor () {
     this.data = {}
     this.emitter = new EventEmitter()
   }
@@ -14,9 +14,9 @@ class UserStore {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 
-          email, 
-          password 
+        body: JSON.stringify({
+          email,
+          password
         })
       })
       if (!response.ok) {
@@ -38,8 +38,8 @@ class UserStore {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 
-          token: this.data.token 
+        body: JSON.stringify({
+          token: this.data.token
         })
       })
       if (!response.ok) {

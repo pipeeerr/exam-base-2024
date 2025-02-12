@@ -9,7 +9,7 @@ class TaskStore {
     this.emitter = new EventEmitter()
   }
 
-  async getAll (state, projectId) {  
+  async getAll (state, projectId) {
     try {
       const response = await fetch(`${SERVER}/api/users/${state.user.data.id}/projects/${projectId}/tasks`, {
         headers: {
