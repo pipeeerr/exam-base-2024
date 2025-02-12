@@ -61,7 +61,7 @@ class TaskStore {
       if (!response.ok) {
         throw response
       }
-      this.getAll(state)
+      this.getAll(state, projectId)
     } catch (err) {
       console.warn(err)
       this.emitter.emit('ADD_TASK_ERROR')
@@ -81,7 +81,7 @@ class TaskStore {
       if (!response.ok) {
         throw response
       }
-      this.getAll(state)
+      this.getAll(state, projectId)
     } catch (err) {
       console.warn(err)
       this.emitter.emit('SAVE_TASK_ERROR')
@@ -99,7 +99,7 @@ class TaskStore {
       if (!response.ok) {
         throw response
       }
-      this.getAll(state)
+      this.getAll(state, projectId)
     } catch (err) {
       console.warn(err)
       this.emitter.emit('DELETE_TASK_ERROR')
@@ -119,7 +119,7 @@ class TaskStore {
       if (!response.ok) {
         throw response
       }
-      this.getAll(state)
+      this.getAll(state, projectId)
     } catch (err) {
       console.warn(err)
       this.emitter.emit('ASSIGN_TASK_ERROR')
@@ -139,7 +139,7 @@ class TaskStore {
       if (!response.ok) {
         throw response
       }
-      this.getAll(state)
+      this.getAll(state, projectId)
     } catch (err) {
       console.warn(err)
       this.emitter.emit('UPDATE_STATUS_ERROR')
