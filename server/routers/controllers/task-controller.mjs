@@ -121,7 +121,15 @@ const deleteOwnedTaskForProject = async (req, res, next) => {
         projectId: req.params.pid
       }
     })
-    if (task) {
+    const permission = await models.Permission.findOne({
+    	where: {
+				forResource: req.params.tid,
+				forUser: req.params.uid,
+				type: 'task'
+			}
+		})
+    if (task && permission) {
+    	await permission.destroy()
       await task.destroy()
       res.status(204).end()
     } else {
@@ -131,6 +139,7 @@ const deleteOwnedTaskForProject = async (req, res, next) => {
     next(err)
   }
 }
+
 
 const assignTaskToUser = async (req, res, next) => {
   try {

@@ -98,7 +98,15 @@ const updateOwnedProject = async (req, res, next) => {
 const deleteOwnedProject = async (req, res, next) => {
   try {
     const project = await models.Project.findByPk(req.params.pid)
-    if (project) {
+    const permission = await models.Permission.findOne({
+			where: {
+				forResource: req.params.pid,
+				forUser: req.params.uid,
+				type: 'project'
+			}
+		})
+    if (permission && permission) {
+    	await permission.destroy()
       await project.destroy()
       res.status(204).end()
     } else {
