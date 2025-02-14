@@ -68,13 +68,6 @@ const App = () => {
           }
           />
           <Route
-            path='/dashboard/:type' element={
-              <AuthGuard isAuthenticated={isAuthenticated}>
-                <Dashboard />
-              </AuthGuard>
-          }
-          />
-          <Route
             path='/projects' element={
               <AuthGuard isAuthenticated={isAuthenticated}>
                 <ProjectList />

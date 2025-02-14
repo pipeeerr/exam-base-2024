@@ -105,7 +105,7 @@ const deleteOwnedProject = async (req, res, next) => {
 				type: 'project'
 			}
 		})
-    if (permission && permission) {
+    if (project && permission) {
     	await permission.destroy()
       await project.destroy()
       res.status(204).end()
