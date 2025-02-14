@@ -1,33 +1,36 @@
-import "./LoginForm.css";
+import "./RegisterForm.css";
 import React, { useState, useContext, useEffect } from "react";
 import AppContext from "../../state/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const { user } = useContext(AppContext);
     const [email, setEmail] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [password, setPassword] = useState("");
     const location = useLocation();
     const navigate = useNavigate();
 
-    const handleLoginClick = () => {
-        user.login(email, password);
+    const handleRegisterClick = () => {
+        if (password === confirmPassword) {
+            user.register(email, password);
+            // user.login(email, password);
+        }
     };
 
     useEffect(() => {
-        user.emitter.addListener("LOGIN_SUCCESS", () => {
+        user.emitter.addListener("REGISTER_SUCCESS", () => {
             setIsAuthenticated(true);
             window.localStorage.setItem("token", user.data.token);
-            navigate(location.state.from);
+            navigate("/");
         });
     }, []);
 
     return (
         <div className="login-form">
             <div className="form-container">
-                <h1>Login</h1>
+                <h1>Register</h1>
                 <input
                     type="text"
                     placeholder="email"
@@ -40,11 +43,16 @@ const LoginForm = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button onClick={handleLoginClick}>Login</button>
-                <Link to="/register">Sign Up</Link>
+                <input
+                    type="password"
+                    placeholder="confirm password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                <button onClick={handleRegisterClick}>Register</button>
             </div>
         </div>
     );
 };
 
-export default LoginForm;
+export default RegisterForm;
